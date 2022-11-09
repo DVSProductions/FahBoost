@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"  xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+	<?define FahBoost_TargetDir=$(var.FahBoost.TargetDir)?>
+	<Product Id="*" Name="Folding At Home Boost" Language="1033" Version="1.0.0.4" Manufacturer="DVSProductions" UpgradeCode="6B756A0C-A20A-40D7-BD00-7C82DD698410">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate />
+
+		<Feature Id="ProductFeature" Title="Folding At Home Boost" Description="Reserves a CPU core for folding at home and keeps everyone off it." Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+			<ComponentGroupRef Id="ProgramFilesFolder_files" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="BoostInstaller" />
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+		</ComponentGroup>
+	</Fragment>
+	<Fragment>
+		<ComponentGroup Id="ProgramFilesFolder_files" Directory="ProgramFilesFolder">
+			<Component Id="FahBoost.exe" Guid="E1C8F32E-DDE7-4DF0-A369-2C7156515B02" KeyPath="no">
+				<File Id="FahBoost.exe" Name="FahBoost.exe" Source="$(var.FahBoost_TargetDir)FahBoost.exe" KeyPath="yes"/>
+				<ServiceInstall Id="ServiceInstall" Name="FahBoost.exe" Type="ownProcess" Description="Reserves a CPU core for folding at home and keeps everyone off it." DisplayName="Folding At Home Booster" Start="auto" ErrorControl="ignore" Vital="yes"  Interactive="no" Account="LocalSystem">
+					<util:ServiceConfig FirstFailureActionType="restart" SecondFailureActionType="restart" ThirdFailureActionType="restart"/>
+				</ServiceInstall>
+			   <ServiceControl Id="StartService" Start="install" Stop="both" Remove="uninstall" Name="FahBoost.exe" Wait="yes" />	
+		</Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>
