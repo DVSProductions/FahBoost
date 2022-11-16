@@ -4,10 +4,8 @@ using System.ServiceProcess;
 using System.Threading;
 
 namespace FahBoost {
-	public partial class FahBoost : ServiceBase {
+	public class FahBoost : ServiceBase {
 		private Thread worker;
-		public FahBoost() => InitializeComponent();
-
 		private bool run = true;
 		private bool running = false;
 

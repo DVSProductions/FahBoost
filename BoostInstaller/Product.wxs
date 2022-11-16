@@ -16,7 +16,9 @@
 	<Fragment>
 		<Directory Id="TARGETDIR" Name="SourceDir">
 			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLFOLDER" Name="BoostInstaller" />
+				<Directory Id="Companyfolder" Name="DVSProductions">
+					<Directory Id="INSTALLFOLDER" Name="FaH Booost" />
+				</Directory>
 			</Directory>
 		</Directory>
 	</Fragment>
@@ -26,14 +28,14 @@
 		</ComponentGroup>
 	</Fragment>
 	<Fragment>
-		<ComponentGroup Id="ProgramFilesFolder_files" Directory="ProgramFilesFolder">
+		<ComponentGroup Id="ProgramFilesFolder_files" Directory="INSTALLFOLDER">
 			<Component Id="FahBoost.exe" Guid="E1C8F32E-DDE7-4DF0-A369-2C7156515B02" KeyPath="no">
 				<File Id="FahBoost.exe" Name="FahBoost.exe" Source="$(var.FahBoost_TargetDir)FahBoost.exe" KeyPath="yes"/>
-				<ServiceInstall Id="ServiceInstall" Name="FahBoost.exe" Type="ownProcess" Description="Reserves a CPU core for folding at home and keeps everyone off it." DisplayName="Folding At Home Booster" Start="auto" ErrorControl="ignore" Vital="yes"  Interactive="no" Account="LocalSystem">
+				<ServiceInstall Id="ServiceInstall" Name="FaH Boost" Type="ownProcess" Description="Reserves a CPU core for folding at home and keeps everyone off it." DisplayName="Folding At Home Booster" Start="auto" ErrorControl="ignore" Vital="yes"  Interactive="no" Account="LocalSystem">
 					<util:ServiceConfig FirstFailureActionType="restart" SecondFailureActionType="restart" ThirdFailureActionType="restart"/>
 				</ServiceInstall>
-			   <ServiceControl Id="StartService" Start="install" Stop="both" Remove="uninstall" Name="FahBoost.exe" Wait="yes" />	
-		</Component>
+				<ServiceControl Id="StartService" Start="install" Stop="both" Remove="uninstall" Name="FaH Boost" Wait="yes" />
+			</Component>
 		</ComponentGroup>
 	</Fragment>
 </Wix>

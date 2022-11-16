@@ -2,13 +2,6 @@
 
 namespace FahBoost {
 	internal static class Program {
-		private static void Main() {
-			ServiceBase[] ServicesToRun;
-			ServicesToRun = new ServiceBase[]
-			{
-				new FahBoost()
-			};
-			ServiceBase.Run(ServicesToRun);
-		}
+		private static void Main() => ServiceBase.Run(new[] { new FahBoost() });
 	}
 }
