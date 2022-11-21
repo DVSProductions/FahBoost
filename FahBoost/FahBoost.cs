@@ -8,7 +8,7 @@ namespace FahBoost {
 		private Thread worker;
 		private bool run = true;
 		private bool running = false;
-
+		private bool pause = false;
 		private void WorkerLoop() {
 			running = true;
 			var allowList = 0;
@@ -18,27 +18,43 @@ namespace FahBoost {
 			}
 			while(run) {
 				var plist = Process.GetProcesses();
-				foreach(var p in plist) {
-					if(p.ProcessName.StartsWith("FahCore", StringComparison.OrdinalIgnoreCase)) {
-						try {
-							if(p.PriorityClass != ProcessPriorityClass.High) {
-								p.PriorityClass = ProcessPriorityClass.High;
-								p.ProcessorAffinity = new IntPtr((1 << (Environment.ProcessorCount - 2)) | (1 << (Environment.ProcessorCount - 1)));
-							}
-						}
-						catch(Exception ex) {
-							throw ex;
-						}
-					}
-					else {
-						try {
-							p.ProcessorAffinity = new IntPtr(allowList);
-						}
-						catch { }
+				pause = true;
+				var fahCoreIndex = 0;
+				for(var n = 0; n < plist.Length; n++) {
+					if(plist[n].ProcessName.StartsWith("FahCore", StringComparison.OrdinalIgnoreCase)) {
+						fahCoreIndex = n;
+						pause = false;
+						break;
 					}
 				}
-				for(var n = 0; n < 60 * 10 && run; n++)
-					Thread.Sleep(100);
+				if(!pause) {
+					for(var i = 0; i < plist.Length; i++) {
+						var p = plist[i];
+						if(i == fahCoreIndex) {
+							try {
+								if(p.PriorityClass != ProcessPriorityClass.High) {
+									p.PriorityClass = ProcessPriorityClass.High;
+									p.ProcessorAffinity = new IntPtr((1 << (Environment.ProcessorCount - 2)) | (1 << (Environment.ProcessorCount - 1)));
+								}
+							}
+							catch(Exception ex) {
+								throw ex;
+							}
+						}
+						else {
+							try {
+								p.ProcessorAffinity = new IntPtr(allowList);
+							}
+							catch { }
+						}
+					}
+					for(var n = 0; n < 60 * 10 && run; n++)
+						Thread.Sleep(100);
+				}
+				else {
+					for(var n = 0; n < 60 * 10 * 5 && run; n++)
+						Thread.Sleep(100);
+				}
 			}
 			running = false;
 		}

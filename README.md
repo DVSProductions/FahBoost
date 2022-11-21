@@ -13,6 +13,7 @@ This is done because a workload on a logical core can affect the Performance of 
 ## Performance impact
 This won't have much of an impact on normal workloads, as a matter of fact it can improve your general performance, because folding at home will stay out of cores you use for your browser or other normal tasks.
 Full CPU workloads will suffer a bit, since the available core count will be lower.
+If the tool detects that you aren't currently folding, it will automatically disable itself and allow other software access to the reserved core.
 
 # Disclaimer
 Use at your own risk. I am not responsible for any damage this tool may cause.

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"  xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
 	<?define FahBoost_TargetDir=$(var.FahBoost.TargetDir)?>
-	<Product Id="*" Name="Folding At Home Boost" Language="1033" Version="1.0.0.4" Manufacturer="DVSProductions" UpgradeCode="6B756A0C-A20A-40D7-BD00-7C82DD698410">
+	<Product Id="*" Name="Folding At Home Boost" Language="1033" Version="1.1" Manufacturer="DVSProductions" UpgradeCode="6B756A0C-A20A-40D7-BD00-7C82DD698410">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
