@@ -10,7 +10,6 @@ namespace FahBoost {
 		private bool run = true;
 		private bool running = false;
 		private void WorkerLoop() {
-			var pause = false;
 			running = true;
 			var allowList = 0;
 			for(var n = 0; n < Environment.ProcessorCount; n++) {
@@ -18,14 +17,14 @@ namespace FahBoost {
 					allowList |= 1 << n;
 			}
 
-			var originalAffinity = new Dictionary<int, IntPtr>();//pid,
+			var originalAffinity = new Dictionary<int, IntPtr>();//pid, affinity
 
 			while(run) {
 				var plist = Process.GetProcesses();
-				pause = true;
+				var pause = true;
 				var fahCoreIndex = 0;
 				for(var n = 0; n < plist.Length; n++) {
-					if(plist[n].ProcessName.StartsWith("FahCore", StringComparison.OrdinalIgnoreCase)) {
+					if(plist[n].ProcessName.StartsWith("FahCore_", StringComparison.OrdinalIgnoreCase)) {
 						fahCoreIndex = n;
 						pause = false;
 						break;
